@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>RAŞİT ❤️ İPEK</title>
+
+<style>
+body{
+margin:0;
+overflow:hidden;
+background:black;
+font-family:monospace;
+color:#ff4dff;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:0;
+}
+
+#text{
+position:absolute;
+top:20px;
+left:20px;
+z-index:2;
+white-space:pre-line;
+text-shadow:0 0 10px #ff4dff;
+}
+
+#inputBox{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:10px;
+z-index:3;
+}
+
+input{
+padding:10px;
+background:#111;
+border:1px solid #ff4dff;
+color:#ff4dff;
+width:220px;
+text-align:center;
+}
+
+button{
+padding:10px 15px;
+background:#ff2e88;
+border:none;
+color:white;
+cursor:pointer;
+}
+
+/* FINAL */
+#final{
+position:fixed;
+inset:0;
+display:none;
+overflow:hidden;
+background:black;
+}
+
+/* STAR */
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+border-radius:50%;
+animation:twinkle 3s infinite;
+}
+
+@keyframes twinkle{
+0%{opacity:0.2;}
+50%{opacity:1;}
+100%{opacity:0.2;}
+}
+
+/* SHIP */
+#ship{
+position:absolute;
+left:50%;
+top:10%;
+transform:translateX(-50%);
+font-size:40px;
+transition:4s;
+cursor:pointer;
+}
+
+/* LETTER */
+#letter{
+position:absolute;
+left:50%;
+top:60%;
+transform:translateX(-50%);
+padding:25px;
+background:rgba(0,0,0,0.7);
+border:1px solid #ff4dff;
+box-shadow:0 0 30px #ff4dff;
+color:white;
+font-size:18px;
+text-align:center;
+opacity:0;
+transition:1s;
+max-width:70%;
+}
+
+#letter.show{opacity:1;}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div id="text"></div>
+
+<div id="inputBox">
+<input id="inp" placeholder="connect / open heart / love">
+<button onclick="send()">ENTER</button>
+</div>
+
+<div id="final">
+<div id="ship">🛸</div>
+<div id="letter"></div>
+</div>
+
+<script>
+
+/* 🎵 MP3 */
+let audio = new Audio("song.mp3");
+
+/* MATRIX */
+const c=document.getElementById("bg");
+const x=c.getContext("2d");
+
+c.width=innerWidth;
+c.height=innerHeight;
+
+let chars="RAŞİTİPEK♥LOVE";
+let drops=Array(90).fill(1);
+
+function draw(){
+x.fillStyle="rgba(0,0,0,0.08)";
+x.fillRect(0,0,c.width,c.height);
+
+x.fillStyle="#ff4dff";
+x.font="14px monospace";
+
+for(let i=0;i<drops.length;i++){
+let t=chars[Math.floor(Math.random()*chars.length)];
+x.fillText(t,i*16,drops[i]*14);
+
+drops[i]++;
+if(drops[i]*14>c.height) drops[i]=0;
+}
+}
+setInterval(draw,45);
+
+/* STORY */
+let step=0;
+const text=document.getElementById("text");
+const inp=document.getElementById("inp");
+
+function say(t){ text.innerText=t; }
+
+say(`>>> ROMANTIC SYSTEM ONLINE 💖
+connect
+open heart
+love`);
+
+function send(){
+let v=inp.value.toLowerCase().trim();
+inp.value="";
+
+if(step===0){
+if(v==="connect"){ step++; say("bağlantı kuruldu 💖"); }
+else say("ipucu: connect");
+return;
+}
+
+if(step===1){
+if(v==="open heart"){ step++; say("kalp açılıyor 💜"); }
+else say("ipucu: open heart");
+return;
+}
+
+if(step===2){
+if(v==="love"){ final(); }
+else say("ipucu: love");
+}
+}
+
+/* FINAL */
+function final(){
+
+document.getElementById("text").style.display="none";
+document.getElementById("inputBox").style.display="none";
+
+const scene=document.getElementById("final");
+scene.style.display="flex";
+
+/* 🎵 MUSIC START */
+audio.currentTime = 60;
+audio.play().catch(()=>{});
+
+/* 🌌 STARS */
+for(let i=0;i<150;i++){
+let s=document.createElement("div");
+s.className="star";
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+scene.appendChild(s);
+}
+
+/* 🚀 SHIP MOVE */
+setTimeout(()=>{
+ship.style.top="45%";
+ship.style.fontSize="80px";
+},600);
+
+/* 📩 CLICK */
+ship.addEventListener("click",()=>{
+
+ship.innerHTML="✨";
+ship.style.fontSize="90px";
+
+let letter=document.getElementById("letter");
+letter.classList.add("show");
+
+letter.innerText=`Hayatımın en güzel sürprizlerinden biri seninle karşılaşmak oldu. 
+Hayatıma kattığın tüm renkler ve anlamlar için çok teşekkür ederim, 
+iyi ki seni tanıdım ❤️`;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
